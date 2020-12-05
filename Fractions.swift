@@ -5,26 +5,8 @@
 
 import Foundation
 
-fileprivate func testFraction() {
-    // TODO: Add a few test project
-    let scenarios: [String: String] = [
-        "\(Fraction(of: 10, by: 4))": "5 / 2",
-        "\(Fraction(with: 1.0/3.0))": "1 / 3",
-        "\(Fraction(of: 3, by: 5) / 3)": "1 / 5",
-        "\(Fraction(of: 3, by: 5) + Fraction(of: 2, by: 5))": "1 / 1",
-        "\(Fraction(of: 3, by: 5) * Fraction(of: 2, by: 5))": "6 / 25",
-        "\(Fraction(of: 3, by: 5) / Fraction(of: 2, by: 5))": "3 / 2",
-        "\(Fraction(of: 3, by: 5) * 5)": "3 / 1",
-        "\(Fraction(of: 3, by: 5) ^ 2)": "9 / 25",
-    ]
-
-    for (key, value) in scenarios {
-        testWithString(of: key, expected: value)
-    }
-}
-
 // MARK: Fraction Structure
-struct Fraction: Equatable, CustomStringConvertible, AdditiveArithmetic {
+public struct Fraction: Equatable, CustomStringConvertible, AdditiveArithmetic {
 
     // Properties
     private(set) var num: Int

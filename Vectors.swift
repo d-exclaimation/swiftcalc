@@ -2,35 +2,10 @@
 // Vectors Objects
 // Created by Vincent on 12/2/20.
 //
-
 import Foundation
 
-fileprivate func testVectors() {
-    // Test function for Vectors
-    print("Vector3 Test:")
-    testWithString(of: "\(Vector3(1, 2, 3) + Vector3(3, 6, 1))", expected: "Vector3 (\(4.0), \(8.0), \(4.0))")
-    testWithString(of: "\(Vector3(1, 2, 3) - Vector3(3, 6, 1))", expected: "Vector3 (\(-2.0), \(-4.0), \(2.0))")
-    testWithString(of: "\(Vector3(1, 2, 3).dot(Vector3(3, 6, 1)))", expected: "\(18.0)")
-    testWithString(of: "\(10.0 * Vector3(1, 2, 3))", expected: "Vector3 (\(10.0), \(20.0), \(30.0))")
-    testWithString(of: "\(Vector3(1, 2, 3) * Vector3(3, 6, 1))", expected: "Vector3 (\(2.0 - 18.0), \(1.0 - 9.0), \(0.0))")
-    testWithString(of: "\(Vector3(1, 2, 3).isOrthogonal(to: Vector3(3, 6, 1)))", expected: "false")
-    testWithString(of: "\(pow(Vector3(3, 6, 1).magnitude, 2))", expected: "46.0")
-    testWithString(of: "\(Vector3(3, 6, 1) == Vector3(3, 6, 1))", expected: "true")
-    testWithString(of: "\(Vector3.zero + Vector3.one + Vector3.right + Vector3.left)", expected: "Vector3 (\(1.0), \(1.0), \(1.0))")
-
-    print("Vector2 Test:")
-    var scenarios: [String: String] = [
-        "\(Vector2.left + Vector2.right)": "Vector2 (\(0.0), \(0.0))",
-        "\(Vector2.one - Vector2.right)": "Vector2 (\(0.0), \(1.0))",
-    ]
-    for key in scenarios.keys {
-        testWithString(of: key, expected: scenarios[key] ?? "")
-    }
-
-}
-
 // MARK: Vector3 Structure
-struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
+public struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
     private var axis: [Double]
 
     // Computed properties
@@ -39,7 +14,7 @@ struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
     var z: Double { axis[2] }
 
     // Static properties
-    static var zero: Vector3 = Vector3(0, 0, 0)
+    public static var zero: Vector3 = Vector3(0, 0, 0)
     static var one: Vector3 = Vector3(1, 1, 1)
 
     // Static direction properties
@@ -62,8 +37,8 @@ struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
         }
     }
 
-    var description: String {
-        "Vector3 (\(self.x), \(self.y), \(self.z))"
+    public var description: String {
+        "Vector3 (\(x), \(y), \(z))"
     }
 
     // Simple Arithmetic
@@ -101,7 +76,7 @@ struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
     }
 
     func dot(_ rhs: Vector3) -> Double {
-        [self.x * rhs.x, self.y * rhs.y, self.z * rhs.z].summed
+        [x * rhs.x, y * rhs.y, z * rhs.z].summed
     }
 
     public static func /(lhs: Vector3, rhs: Double) -> Vector3 {
@@ -109,20 +84,25 @@ struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
     }
 
     // Others
-    var magnitude: Double { sqrt([self.x, self.y, self.z].map{pow($0, 2)}.summed) }
+    var magnitude: Double { sqrt([x, y, z].map{pow($0, 2)}.summed) }
 
     public static func ==(lhs: Vector3, rhs: Vector3) -> Bool {
         lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
     }
 
     func isOrthogonal(to other: Vector3) -> Bool {
-        self.dot(other) == 0
+        dot(other) == 0
+    }
+
+    func projection(to other: Vector3) -> Vector3 {
+        let multiplier = dot(other) / pow(other.magnitude, 2)
+        return multiplier * other
     }
 
 }
 
 // MARK: Vector2 Structure
-struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
+public struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
     private var axis: [Double]
 
     // Computed properties
@@ -135,7 +115,7 @@ struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
     }
 
     // Static properties
-    static var zero: Vector2 = Vector2(0, 0)
+    public static var zero: Vector2 = Vector2(0, 0)
     static var one: Vector2 = Vector2(1, 1)
     static var up: Vector2 = Vector2(0, 1)
     static var down: Vector2 = Vector2(0, -1)
@@ -155,8 +135,8 @@ struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
         }
     }
 
-    var description: String {
-        "Vector2 (\(self.x), \(self.y))"
+    public var description: String {
+        "Vector2 (\(x), \(y))"
     }
 
     // Simple Arithmetic
@@ -170,22 +150,22 @@ struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
 
     // Complex Arithmetic
     func dot(_ other: Vector2) -> Double {
-        [self.x * other.x, self.y * other.y].summed
+        [x * other.x, y * other.y].summed
     }
 
-    var magnitude: Double { sqrt([self.x, self.y].map{pow($0, 2)}.summed) }
+    var magnitude: Double { sqrt([x, y].map{pow($0, 2)}.summed) }
 
     public static func ==(lhs: Vector2, rhs: Vector2) -> Bool {
         lhs.x == rhs.x && lhs.y == rhs.y
     }
 
     func isOrthogonal(to other: Vector2) -> Bool {
-        self.dot(other) == 0
+        dot(other) == 0
     }
 }
 
 // VectorAny Structure
-struct VectorAny: Equatable, CustomStringConvertible {
+public struct VectorAny: Equatable, CustomStringConvertible {
     private var axis: [Double]
 
     // Computed properties
@@ -215,8 +195,8 @@ struct VectorAny: Equatable, CustomStringConvertible {
         self.axis = axis
     }
 
-    var description: String {
-        " VectorAny (\(self.axis.map{String($0)}.joined(separator: ",")))"
+    public var description: String {
+        " VectorAny (\(axis.map{String($0)}.joined(separator: ",")))"
     }
 
     // Simple Arithmetic
@@ -239,14 +219,14 @@ struct VectorAny: Equatable, CustomStringConvertible {
     // Complex Arithmetic
     func dot(_ other: VectorAny) -> Double? {
         // Check for the same dimension size
-        guard self.dimensions == other.dimensions else {
+        guard dimensions == other.dimensions else {
             return nil
         }
-        return self.axis.indices.map{ self.axis[$0] * other.axis[$0] }.summed
+        return self.axis.indices.map{ axis[$0] * other.axis[$0] }.summed
     }
 
     // Others
-    var magnitude: Double { sqrt(self.axis.map{pow($0, 2)}.summed) }
+    var magnitude: Double { sqrt(axis.map{pow($0, 2)}.summed) }
 
     public static func ==(lhs: VectorAny, rhs: VectorAny) -> Bool {
         // Check for the same dimension size
@@ -265,29 +245,27 @@ struct VectorAny: Equatable, CustomStringConvertible {
 
     func isOrthogonal(to other: VectorAny) -> Bool {
         // Check for the same dimension size
-        guard let dot = self.dot(other) else {
+        guard let dot = dot(other) else {
             return false
         }
         return dot == 0
     }
 }
 
-func parallelogram(with lhs: Vector2, and rhs: Vector2) -> Double {
+public func parallelogram(with lhs: Vector2, and rhs: Vector2) -> Double {
     sqrt(pow(lhs.magnitude, 2) * pow(rhs.magnitude, 2) - pow(lhs.dot(rhs), 2))
 }
 
-func parallelogram(with lhs: Vector3, and rhs: Vector3) -> Double {
-    guard let cross = lhs * rhs else {
-        return 0.0
-    }
-    return cross.magnitude
+public func parallelogram(with lhs: Vector3, and rhs: Vector3) -> Double {
+    (lhs * rhs).magnitude
 }
 
-func triangle(with lhs: Vector2, and rhs: Vector2) -> Double {
+public func triangle(with lhs: Vector2, and rhs: Vector2) -> Double {
     parallelogram(with: lhs, and: rhs) / 2
 }
 
-func triangle(with lhs: Vector3, and rhs: Vector3) -> Double {
+public func triangle(with lhs: Vector3, and rhs: Vector3) -> Double {
     parallelogram(with: lhs, and: rhs) / 2
 }
+
 

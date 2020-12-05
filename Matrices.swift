@@ -5,30 +5,8 @@
 
 import Foundation
 
-fileprivate func testMatrix() {
-    // TODO: Add a few test project
-    let matrixA: Matrix = Matrix(auto: [
-        [1, 2, 3],
-        [3, 4, 5],
-        [6, 7, 5]
-    ])
-    testWithString(of: "\(matrixA)", expected: "[1.0, 2.0, 3.0]\n[3.0, 4.0, 5.0]\n[6.0, 7.0, 8.0]")
-    let matrixB: Matrix = Matrix(auto: [
-        [3, 4, 5, 6],
-        [1, 6, 2, 1],
-        [0, 0, 0, 0]
-    ])
-    testWithString(of: "\((matrixB + matrixB)!)", expected: "\(2 * matrixB)")
-    testWithString(of: "\(matrixA.isSquare)", expected: "true")
-    testWithString(of: "\(matrixA ^ 2)", expected: "\(matrixA * matrixA)")
-    testWithString(of: "\(matrixA.transposed()!)", expected: "[1.0, 3.0, 6.0]\n[2.0, 4.0, 7.0]\n[3.0, 5.0, 8.0]")
-    print("\n\n")
-    print(matrixA.inversed())
-
-}
-
 // MARK: Matrix Object
-struct Matrix: CustomStringConvertible, Equatable {
+public struct Matrix: CustomStringConvertible, Equatable {
     private(set) var grid: [[Double]]
     
     // Computer properties
@@ -36,9 +14,9 @@ struct Matrix: CustomStringConvertible, Equatable {
     var height: Int { grid.count }
     var isSquare: Bool { width == height }
 
-    var description: String {
+    public var description: String {
         var newValue = ""
-        self.grid.forEach { row in
+        grid.forEach { row in
             newValue += "\(row)\n"
         }
         newValue.removeLast()
@@ -203,13 +181,13 @@ struct Matrix: CustomStringConvertible, Equatable {
 
     // MARK:  Inverse matrix
     func inversed() -> Matrix? {
-        guard self.isSquare else {
+        guard isSquare else {
             return nil
         }
 
         // Use echelon steps by having an augmented matrix with an identity as result block
-        var ide: [[Double]] = Matrix.identity(of: self.height).grid
-        var newGrid: [[Double]] = self.grid
+        var ide: [[Double]] = Matrix.identity(of: height).grid
+        var newGrid: [[Double]] = grid
         for i in newGrid.indices {
             for j in i + 1..<newGrid.count {
                 let coef = newGrid[j][i] / newGrid[i][i]
@@ -273,12 +251,12 @@ struct Matrix: CustomStringConvertible, Equatable {
     }
 
     func transposed() -> Matrix? {
-        guard self.isSquare else {
+        guard isSquare else {
             return nil
         }
-        let newGrid = self.grid.indices.map { i in
-            self.grid[i].indices.map { j in
-                self.grid[j][i]
+        let newGrid = grid.indices.map { i in
+            grid[i].indices.map { j in
+                grid[j][i]
             }
         }
         return Matrix(auto: newGrid)

@@ -6,22 +6,11 @@
 import Foundation
 
 
-fileprivate func testAugMatrix() {
-    // TODO: Test Cases here
-    let scenarios: [String: String] = [
-        "\(AugmentedMatrix(auto: [[1, 2], [3, 4]], with: [5, 7]).echelon()!)": "1.0, 2.0 | 5.0\n0.0, -2.0 | -8.0\n",
-    ]
-
-    for (key, value) in scenarios {
-        testWithString(of: key, expected: value)
-    }
-}
-
-struct AugmentedMatrix: CustomStringConvertible {
+public struct AugmentedMatrix: CustomStringConvertible {
     private(set) var matrix: [[Double]]
     private(set) var result: [Double]
 
-    var description: String {
+    public var description: String {
         var res = ""
         matrix.indices.forEach { i in
             res += matrix[i].map{ String($0) }.joined(separator: ", ") + " | \(result[i])\n"

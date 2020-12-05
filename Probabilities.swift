@@ -13,7 +13,7 @@ fileprivate func testProbabilities() {
     print(5.combine(with: 2))
 }
 
-extension Int {
+public extension Int {
     func commonFactor(with other: Int) -> Int {
         // Try to get a common factor
         var result: Int = 0
@@ -39,10 +39,10 @@ extension Int {
     }
 
     func permute(with num: Int) -> Double {
-        Double(self.factorial) / Double((self - num).factorial)
+        Double(factorial) / Double((self - num).factorial)
     }
 
     func combine(with num: Int) -> Double {
-        Double(self.factorial) / (Double((self - num).factorial) * Double((num).factorial))
+        Double(factorial) / (Double((self - num).factorial) * Double((num).factorial))
     }
 }

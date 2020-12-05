@@ -8,13 +8,22 @@ Authored by Vincent
 
 If you are using an Xcode importing is as easy as dropping files in the folder
 
-If you are not, I still recommend using Xcode project. Importing without Xcode will be added once I have time
+If you are not, I still recommend using Xcode project. 
+
+## Importing with Swift Package Manager
+
+Using it with Swift Package is now a simple drap and drop in your current package folder. (Hopefully lol)
+
+All the structs, functions, extensions, variables are now adjusted for the Swift Package Manager.
+
+You can also make a new package source directory. 
 
 # Setup
 
 > 1. Download all the files
 > 2. Drop in the project folder
-> 3. Start using it without namespaces
+> 3. Re-compile is necessary
+> 4. Start using it without namespaces
 
 e.g:
 ```swift
@@ -26,6 +35,8 @@ print(Vector3.up)
 ```
 
 # Descriptions:
+
+### Structures / Objects
 
 ```swift
 struct Fraction {...}
@@ -56,3 +67,54 @@ struct Matrix {...}
 struct AugmentedMatrix {...}
 ```
 > The representation of a AugmentedMatrix of size n (height) x m (width) with extra 1 x m sized Matrix with all its properties and methods
+
+### Functions
+
+```swift
+func parallelogram(lhs: Vector2 / Vector3, rhs: Vector2 / Vector3) -> Double
+```
+> Calculate the area of a parallelogram using two vectors
+
+```swift
+func triangle(lhs: Vector2 / Vector3, rhs: Vector2 / Vector3) -> Double
+```
+> Calculate the are of a triangle using two vectors
+
+### Extensions
+
+[Double] / Array<Double>
+
+```swift
+func dot(with other: [Double]) -> Double?
+```
+> Calculate the dot product of two Double array, return nil if the arrays don't have the same size
+
+```swift
+* Double
+* [Double]
+- [Double]
+```
+> Added multiplication with a Double and Array, as well as reducing with another array
+
+```swift
+var summed: Double
+```
+> Sum all it's content
+
+Int
+
+```swift
+func commonFactor(with other: Int) -> Int
+```
+> Get the common factor of two Integers
+
+```swift
+func permute(with num: Int) -> Double 
+```
+> Get the permutation of self with num, which num is the number of object selected
+
+```swift
+func combine(with num: Int) -> Double 
+```
+> Get the combination of self with num, which num is the number of object selected
+
