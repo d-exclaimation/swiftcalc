@@ -149,6 +149,10 @@ public struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
     }
 
     // Complex Arithmetic
+    public static func *(lhs: Double, rhs: Vector2) -> Vector2 {
+        Vector2(lhs * rhs.x, lhs * rhs.y)
+    }
+
     func dot(_ other: Vector2) -> Double {
         [x * other.x, y * other.y].summed
     }
@@ -162,6 +166,12 @@ public struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
     func isOrthogonal(to other: Vector2) -> Bool {
         dot(other) == 0
     }
+
+    func projection(to other: Vector2) -> Vector2 {
+        let multiplier = dot(other) / pow(other.magnitude, 2)
+        return multiplier * other
+    }
+
 }
 
 // VectorAny Structure
