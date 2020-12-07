@@ -6,12 +6,12 @@ import Foundation
 
 // MARK: Vector3 Structure
 public struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
-    private var axis: [Double]
+    private var _axis: [Double]
 
     // Computed properties
-    var x: Double { axis[0] }
-    var y: Double { axis[1] }
-    var z: Double { axis[2] }
+    var x: Double { _axis[0] }
+    var y: Double { _axis[1] }
+    var z: Double { _axis[2] }
 
     // Static properties
     public static var zero: Vector3 = Vector3(0, 0, 0)
@@ -26,12 +26,12 @@ public struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
     static var back: Vector3 = Vector3(0, 0, -1)
 
     init(_ x: Double, _ y: Double, _ z: Double) {
-        axis = [x, y, z]
+        _axis = [x, y, z]
     }
 
     init?(_ axis: [Double]) {
         if axis.count == 3 {
-            self.axis = axis
+            _axis = axis
         } else {
             return nil
         }
@@ -103,16 +103,12 @@ public struct Vector3: Equatable, CustomStringConvertible, AdditiveArithmetic {
 
 // MARK: Vector2 Structure
 public struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
-    private var axis: [Double]
+    private var _axis: [Double]
 
     // Computed properties
-    var x: Double {
-        axis[0]
-    }
+    var x: Double { _axis[0] }
 
-    var y: Double {
-        axis[1]
-    }
+    var y: Double { _axis[1] }
 
     // Static properties
     public static var zero: Vector2 = Vector2(0, 0)
@@ -124,12 +120,12 @@ public struct Vector2: AdditiveArithmetic, Equatable, CustomStringConvertible {
 
 
     init(_ x: Double, _ y: Double) {
-        axis = [x, y]
+        _axis = [x, y]
     }
 
     init?(_ axis: [Double]) {
         if axis.count == 2 {
-            self.axis = axis
+            _axis = axis
         } else {
             return nil
         }

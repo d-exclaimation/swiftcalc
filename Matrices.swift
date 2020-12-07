@@ -178,11 +178,24 @@ public struct Matrix: CustomStringConvertible, Equatable {
         return newValue
     }
 
+    var determinant: Double {
+        guard isSquare && width == 2 else {
+            return 0
+        }
+        return grid[0][0] * grid[1][1] - grid[1][0] * grid[0][1]
+    }
 
     // MARK:  Inverse matrix
     func inversed() -> Matrix? {
         guard isSquare else {
             return nil
+        }
+
+        if width == 2 {
+            guard determinant != 0 else {
+                return nil
+            }
+            return Int(determinant) * self
         }
 
         // Use echelon steps by having an augmented matrix with an identity as result block
